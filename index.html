@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Web Socket Test Site</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <input id="sentText">    
+    <button onclick="sentMessage()" >Sent Message</button>
+    
+    
+    <script>
+        
+
+        var ws_feed = new WebSocket("ws://127.0.0.1:5679/")
+        var messages = document.createElement('ul')
+        ws_feed.onmessage = function (event) {
+            var messages = document.getElementsByTagName('ul')[0],
+                message = document.createElement('li'),
+                content = document.createTextNode(event.data);
+            message.appendChild(content);
+            messages.appendChild(message);
+            };
+            document.body.appendChild(messages);
+
+
+
+        function sentMessage() {
+            var data = document.getElementById('sentText').value
+            console.log(data)
+            // When the connection is open, send some data to the server
+
+            var ws = new WebSocket(wsUrl)
+
+            // When the connection is open, send some data to the server
+            ws.onopen = function() {
+            ws.send(data); // Send the message 'Ping' to the server
+            };
+
+            // Log errors
+            ws.onerror = function (error) {
+            console.log('WebSocket Error ' + error);
+            };
+
+            // Log messages from the server
+            ws.onmessage = function (e) {
+            console.log('Server: ' + e.data);
+            };
+
+            ws.onclose = function (e){
+                console.log('Server Closing')
+            }
+         }
+        
+        
+        </script>
+        <script src="aximo_websocket.js"></script>
+
+</body>
+</html>
