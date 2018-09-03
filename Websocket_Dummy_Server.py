@@ -16,10 +16,6 @@ import random
 
 
 
-
-
-
-
 # Websockets Variable
 servername = 'localhost'
 port_getreturn = 5678
@@ -35,8 +31,11 @@ async def async_loop(websocket, path):
 
 async def async_feed(websocket, path):
     while True:
-        # now = datetime.datetime.utcnow().isoformat() + 'Z'
-        v = "{ok:" + now + "}"
+        timestamp = datetime.datetime.utcnow().isoformat() + 'Z'
+        status = "ok"
+        nValue = str(int(random.random()*30))
+        id = "id_02"
+        v = "{\"status\":\"" + status + "\", \"id\":\"" + id + "\", \"timestamp\":\"" + timestamp + "\", \"value\":\"" + nValue + "\"}"
         await websocket.send(v)
         await asyncio.sleep(random.random() * 10)
 
